@@ -1,0 +1,24 @@
+﻿body {
+  margin: 0;
+  padding: 0;
+}
+
+#toolbar {
+  background-color: #999;
+  border-bottom: 2px black solid;
+  padding-left: 8px;
+}
+
+#toolbar > input {
+  padding: 4px 8px 4px 8px;
+  background-color: #EEE;
+  border: 1px black solid;
+  border-radius: 4px;
+  margin: 4px;
+}
+
+#viz {
+  margin: 0;
+  padding: 0;
+}
+
