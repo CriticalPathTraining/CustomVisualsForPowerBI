@@ -1,48 +1,42 @@
 {
-    "dataRoles": [
-        {
-            "displayName": "Category Data",
-            "name": "category",
-            "kind": 0
+  "dataRoles": [
+    {
+      "displayName": "Category Data",
+      "name": "category",
+      "kind": 0
+    },
+    {
+      "displayName": "Measure Data",
+      "name": "measure",
+      "kind": 1
+    }
+  ],
+  "dataViewMappings": [ {
+      "conditions": [ {          
+          "category": { "max": 1 },
+          "measure":  { "max": 1 }
+        }
+      ],
+      "categorical": {
+        "categories": {          
+          "for": { "in": "category" },
+          "dataReductionAlgorithm": { "top": { } }
         },
-        {
-            "displayName": "Measure Data",
-            "name": "measure",
-            "kind": 1
+        "values": {
+          "select": [ { "bind": { "to": "measure" } } ]
         }
-    ],
-    "dataViewMappings": [
-        {
-            "conditions": [
-                {
-                    "category": {
-                        "max": 1
-                        },
-                    "measure": {
-                        "max": 1
-                    }
-                }
-            ],
-
-            "categorical": {
-                "categories": {
-                    "for": {
-                        "in": "category"
-                    },
-                    "dataReductionAlgorithm": {
-                        "top": {}
-                    }
-                },
-                "values": {
-                    "select": [
-                        {
-                            "bind": {
-                                "to": "measure"
-                            }
-                        }
-                    ]
-                }
-            }
+      }
+    }
+  ],
+  "objects": {
+    "colorSelector": {
+      "displayName": "Bar Chart Colors",
+      "properties": {
+        "fill": {
+          "displayName": "Color",
+          "type": { "fill": { "solid": { "color": true } } }
         }
-    ]
+      }
+    }
+  }
 }

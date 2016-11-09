@@ -8,82 +8,81 @@ var powerbi;
             (function (PBI_CV_8DD8014C_2A2B_4017_9C8E_8FD194F9DF96) {
                 var Visual = (function () {
                     function Visual(options) {
-                        this.margin = { top: 20, right: 20, bottom: 200, left: 70 };
-                        console.log("constructor");
                         this.svg = d3.select(options.element).append('svg');
-                        this.g = this.svg.append('g');
-                        this.myVisualProp = false;
+                        this.svgGroupMain = this.svg.append('g');
+                        this.enableAxis = false;
                     }
                     Visual.prototype.update = function (options) {
-                        console.log("update execuring...");
+                        // ensure that categorical dataview contains categories and measurable values 
                         var categorical = options.dataViews[0].categorical;
-                        console.log(JSON.stringify(categorical));
                         if (typeof categorical.categories === "undefined" || typeof categorical.values === "undefined") {
-                            console.log("abc");
-                            this.g.selectAll("g").remove();
-                            console.log("xyz");
+                            // remove all existing SVG elements 
+                            this.svgGroupMain.selectAll("g").remove();
                             return;
                         }
-                        //this.myVisualProp = options.dataViews[0].metadata.objects["myCustomObj"]["myprop"];
-                        // "this" changes inside nested functions
-                        // create outerThis variable to use inside nested functions
-                        var outerThis = this;
+                        this.dataView = options.dataViews[0];
                         // get height and width from viewport
                         this.svg.attr({
                             height: options.viewport.height,
-                            width: options.viewport.width });
-                        var gHeight = options.viewport.height - outerThis.margin.top - outerThis.margin.bottom;
-                        var gWidth = options.viewport.width - outerThis.margin.right - outerThis.margin.left;
-                        this.g.attr({ height: gHeight, width: gWidth });
-                        this.g.attr('transform', 'translate(' + outerThis.margin.left + ',' + outerThis.margin.top + ')');
+                            width: options.viewport.width
+                        });
+                        var paddingSVG = 12;
+                        var xAxisOffset = 50;
+                        var yAxisOffset = 24;
+                        var plot = {
+                            xOffset: paddingSVG + xAxisOffset,
+                            yOffset: paddingSVG,
+                            width: options.viewport.width - (paddingSVG * 2) - xAxisOffset,
+                            height: options.viewport.height - (paddingSVG * 2) - yAxisOffset,
+                        };
+                        this.svgGroupMain.attr({
+                            height: plot.height,
+                            width: plot.width,
+                            transform: 'translate(' + plot.xOffset + ',' + plot.yOffset + ')'
+                        });
                         // convert data format
                         var dataResult = Visual.converter(options.dataViews[0].categorical);
                         // setup d3 scale
                         var xScale = d3.scale.ordinal()
                             .domain(dataResult.map(function (d) { return d.Category; }))
-                            .rangeRoundBands([0, gWidth], 0.1);
-                        var yMax = d3.max(dataResult, function (d) { return d.Value + 10; });
+                            .rangeRoundBands([0, plot.width], 0.1);
+                        var yMax = d3.max(dataResult, function (d) { return d.Value * 1.05; });
                         var yScale = d3.scale.linear()
                             .domain([0, yMax])
-                            .range([gHeight, 0]);
-                        // remove exsisting axis and bar
+                            .range([plot.height, 0]);
+                        // remove existing SVG elements from previous update
                         this.svg.selectAll('.axis').remove();
                         this.svg.selectAll('.bar').remove();
                         // draw x axis
                         var xAxis = d3.svg.axis()
                             .scale(xScale)
                             .orient('bottom');
-                        this.g
+                        this.svgGroupMain
                             .append('g')
                             .attr('class', 'x axis')
-                            .style('fill', 'black') // you can get from metadata
-                            .attr('transform', 'translate(0,' + (gHeight - 1) + ')')
-                            .call(xAxis)
-                            .selectAll('text') // rotate text
-                            .style('text-anchor', 'end')
-                            .attr('dx', '-.8em')
-                            .attr('dy', '-.6em')
-                            .attr('transform', 'rotate(-90)');
+                            .style('fill', 'black')
+                            .attr('transform', 'translate(0,' + (plot.height) + ')')
+                            .call(xAxis);
                         // draw y axis
                         var formatValue = d3.format(".2s");
                         var yAxis = d3.svg.axis()
                             .scale(yScale)
                             .orient('left')
                             .tickFormat(function (d) { return formatValue(d); });
-                        this.g
+                        this.svgGroupMain
                             .append('g')
                             .attr('class', 'y axis')
                             .style('fill', 'black') // you can get from metadata
                             .call(yAxis);
                         // draw bar
-                        var shapes = this.g
+                        var svgGroupBars = this.svgGroupMain
                             .append('g')
                             .selectAll('.bar')
                             .data(dataResult);
-                        shapes.enter()
+                        svgGroupBars.enter()
                             .append('rect')
                             .attr('class', 'bar')
-                            .attr('fill', 'green')
+                            .attr('fill', Visual.getFill(this.dataView).solid.color)
                             .attr('stroke', 'black')
                             .attr('x', function (d) {
                             return xScale(d.Category);
@@ -93,22 +92,36 @@ var powerbi;
                             return yScale(d.Value);
                         })
                             .attr('height', function (d) {
-                            return gHeight - yScale(d.Value);
+                            return plot.height - yScale(d.Value);
                         });
-                        shapes
+                        svgGroupBars
                             .exit()
                             .remove();
                     };
+                    Visual.getFill = function (dataView) {
+                        if (dataView) {
+                            var objects = dataView.metadata.objects;
+                            if (objects) {
+                                var object = objects['colorSelector'];
+                                if (object) {
+                                    var fill = object['fill'];
+                                    if (fill)
+                                        console.log(JSON.stringify(fill));
+                                    return fill;
+                                }
+                            }
+                        }
+                        return { solid: { color: "teal" } };
+                    };
                     Visual.prototype.enumerateObjectInstances = function (options) {
-                        console.log("enumerateObjectInstances");
                         var objectName = options.objectName;
                         var objectEnumeration = [];
                         switch (objectName) {
-                            case 'enableAxis':
+                            case 'colorSelector':
                                 objectEnumeration.push({
                                     objectName: objectName,
                                     properties: {
-                                        show: true,
+                                        fill: Visual.getFill(this.dataView)
                                     },
                                     selector: null
                                 });
@@ -117,7 +130,6 @@ var powerbi;
                         ;
                         return objectEnumeration;
                     };
-                    Visual.prototype.destroy = function () { };
                     Visual.converter = function (cat) {
                         var resultData = [];
                         for (var i = 0; i < cat.categories[0].values.length; i++) {
@@ -126,6 +138,7 @@ var powerbi;
                         resultData.sort(function (x, y) { return y.Value - x.Value; });
                         return resultData;
                     };
+                    Visual.prototype.destroy = function () { };
                     return Visual;
                 }());
                 PBI_CV_8DD8014C_2A2B_4017_9C8E_8FD194F9DF96.Visual = Visual;
@@ -139,8 +152,8 @@ var powerbi;
     (function (visuals) {
         var plugins;
         (function (plugins) {
-            plugins.PBI_CV_8DD8014C_2A2B_4017_9C8E_8FD194F9DF96_DEBUG = {
-                name: 'PBI_CV_8DD8014C_2A2B_4017_9C8E_8FD194F9DF96_DEBUG',
+            plugins.PBI_CV_8DD8014C_2A2B_4017_9C8E_8FD194F9DF96 = {
+                name: 'PBI_CV_8DD8014C_2A2B_4017_9C8E_8FD194F9DF96',
                 displayName: 'Simple Bar Chart',
                 class: 'Visual',
                 version: '1.0.0',

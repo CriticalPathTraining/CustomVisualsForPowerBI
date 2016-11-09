@@ -1,0 +1,74 @@
+{
+    "build": "13.0.800.220",
+    "version": "1.0.1",
+    "author": {
+        "name": "Prologika LLC",
+        "email": "info@prologika.com"
+    },
+    "licenseTerms": "https://powerbi.microsoft.com/en-us/visuals-gallery-terms",
+    "privacyTerms": "https://www.microsoft.com/en-us/privacystatement/default.aspx",
+    "resources": [
+        {
+            "resourceId": "rId0",
+            "sourceType": 5,
+            "file": "resources/Sparkline.ts"
+        },
+        {
+            "resourceId": "rId1",
+            "sourceType": 0,
+            "file": "resources/Sparkline.js"
+        },
+        {
+            "resourceId": "rId2",
+            "sourceType": 1,
+            "file": "resources/Sparkline.css"
+        },
+        {
+            "resourceId": "rId3",
+            "sourceType": 3,
+            "file": "resources/icon.png"
+        },
+        {
+            "resourceId": "rId4",
+            "sourceType": 6,
+            "file": "resources/thumbnail.png"
+        },
+        {
+            "resourceId": "rId5",
+            "sourceType": 2,
+            "file": "resources/screenshot.png"
+        }
+    ],
+    "visual": {
+        "name": "Sparkline",
+        "displayName": "Sparkline",
+        "guid": "Sparkline1444636326814",
+        "version": "1.0.1",
+        "description": "A sparkline is a small graph for showing a trend, usually over time. The sparkline visual plots a smooth line for visualizing a measure grouped by another field, such as month or quarter.\n\nConfigure the sparkline to group data by a single category field, such as Year, and a single measure, such as Sales. You can configure the line color, width, and even animate the graph.",
+        "supportUrl": "http://prologika.com/contact.aspx"
+    },
+    "images": {
+        "icon": {
+            "resourceId": "rId3"
+        },
+        "screenshots": [
+            {
+                "resourceId": "rId5"
+            }
+        ],
+        "thumbnail": {
+            "resourceId": "rId4"
+        }
+    },
+    "code": {
+        "typeScript": {
+            "resourceId": "rId0"
+        },
+        "javaScript": {
+            "resourceId": "rId1"
+        },
+        "css": {
+            "resourceId": "rId2"
+        }
+    }
+}
