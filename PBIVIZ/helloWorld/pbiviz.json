@@ -1,0 +1,23 @@
+{
+  "visual": {
+    "name": "helloWorld",
+    "displayName": "HelloWorld",
+    "guid": "PBI_CV_8BC432A5_459E_4EE6_8B5C_2816B7F7E757",
+    "visualClassName": "Visual",
+    "version": "1.0.0",
+    "description": "",
+    "supportUrl": "",
+    "gitHubUrl": ""
+  },
+  "apiVersion": "1.1.0",
+  "author": {
+    "name": "",
+    "email": ""
+  },
+  "assets": {
+    "icon": "assets/icon.png"
+  },
+  "externalJS": [],
+  "style": "style/visual.less",
+  "capabilities": "capabilities.json"
+}

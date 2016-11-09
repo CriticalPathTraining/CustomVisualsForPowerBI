@@ -1,0 +1,19 @@
+.visual-PBI_CV_9E1E30E2_0235_4FD8_885B_CFE7A1D7BDBA_DEBUG p {
+  font-size: 20px;
+  font-weight: bold;
+}
+.visual-PBI_CV_9E1E30E2_0235_4FD8_885B_CFE7A1D7BDBA_DEBUG p em {
+  background: yellow;
+  padding: 5px;
+}
+.visual-PBI_CV_9E1E30E2_0235_4FD8_885B_CFE7A1D7BDBA_DEBUG table {
+  margin: 12px;
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+.visual-PBI_CV_9E1E30E2_0235_4FD8_885B_CFE7A1D7BDBA_DEBUG td {
+  padding: 4px;
+  font-size: 14pt;
+  border: 1px solid black;
+  background-color: white;
+}
