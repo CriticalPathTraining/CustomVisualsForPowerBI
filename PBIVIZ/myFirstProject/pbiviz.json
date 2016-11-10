@@ -1,0 +1,23 @@
+{
+  "visual": {
+    "name": "myFirstProject",
+    "displayName": "MyFirstProject",
+    "guid": "PBI_CV_B6D2EE92_5ECF_4BB5_B1F3_3F62E93221CA",
+    "visualClassName": "Visual",
+    "version": "1.0.0",
+    "description": "",
+    "supportUrl": "",
+    "gitHubUrl": ""
+  },
+  "apiVersion": "1.1.0",
+  "author": {
+    "name": "",
+    "email": ""
+  },
+  "assets": {
+    "icon": "assets/icon.png"
+  },
+  "externalJS": [],
+  "style": "style/visual.less",
+  "capabilities": "capabilities.json"
+}
