@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\node_modules\\powerbi-visuals-utils-dataviewutils",
+    "\\node_modules\\powerbi-visuals-utils-dataviewutils\\lib",
+    "\\node_modules\\powerbi-visuals-utils-svgutils\\lib",
+    "\\node_modules\\powerbi-visuals-utils-typeutils\\lib"
+  ],
+  "SelectedNode": "\\pbiviz.json",
+  "PreviewInSolutionExplorer": false
+}
