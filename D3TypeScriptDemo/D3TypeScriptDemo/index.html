@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <title>D3 Demo</title>
+  <meta charset="utf-8" />
+  <link href="Content/bootstrap.css" rel="stylesheet" />
+  <link href="Content/bootstrap-theme.css" rel="stylesheet" />
+  <link href="Content/font-awesome.css" rel="stylesheet" />
+  <link href="App/app.css" rel="stylesheet" />
+</head>
+<body>
+
+  <div id="banner">
+    <div id="app-icon"></div>
+    <div id="top-nav" class="hidden-xs">
+      <ul>
+        <li><span class="fa fa-user" /></li>
+        <li><a href="#">Walter White</a></li>
+        <li><span class="fa fa-caret-down" /></li>
+      </ul>
+    </div>
+    <div id="app-title">
+      D3 Demo<span id="visualName"></span>
+    </div>
+  </div>
+
+  <div id="left-nav" class="navigationPane navigationPaneCollapsed">
+    <div id="left-nav-body">
+      <div class="leftNavSection">
+        <div id="left-nav-toggle">
+          <div class="leftNavIcon fa fa-bar-chart"></div>
+          <div class="leftNavTitle leftNavItem leftNavHide">Visual Picker</div>
+        </div>
+        <ul id="visualPickerMenu" class="leftNavMenu leftNavItem leftNavHide"></ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="content-body" class="contentBody contentBodyNavigationCollapsed">
+    <div id="viz" />
+  </div>
+
+  <script src="Scripts/jquery-3.1.1.js"></script>
+  <script src="Scripts/bootstrap.js"></script>
+  <script src="Scripts/d3/d3.js"></script>
+  <script src="App/visuals.js"></script>
+  <script src="App/app.js"></script>
+
+</body>
+</html>

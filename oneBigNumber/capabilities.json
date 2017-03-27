@@ -1,0 +1,66 @@
+{
+  "dataRoles": [
+    {
+      "displayName": "My Single Value",
+      "name": "myvalue",
+      "kind": "Measure"
+    }
+  ],
+  "dataViewMappings": [
+    {
+      "conditions": [ { "myvalue": { "min": 1, "max": 1 } } ],
+      "single": { "role": "myvalue" }
+    }
+  ],
+  "objects": {
+    "oneBigNumberProperties": {
+      "displayName": "One Big Number Properties",
+      "properties": {
+        "showName": {
+          "displayName": "Show Name",
+          "type": { "bool": true }
+        },
+        "fontBold": {
+          "displayName": "Font Bold",
+          "type": { "bool": true }
+        },
+        "fontColor": {
+          "displayName": "Font Color",
+          "type": { "fill": { "solid": { "color": true } } }
+        },
+        "backgroundColor": {
+          "displayName": "Background Color",
+          "type": { "fill": { "solid": { "color": true } } }
+        },
+        "fontType": {
+          "displayName": "Font Type",
+          "type": {
+            "enumeration": [
+              {
+                "displayName": "Boring",
+                "value": "boring"
+              },
+
+              {
+                "displayName": "Fancy",
+                "value": "fancy"
+              },
+              {
+                "displayName": "Professional",
+                "value": "professional"
+              },
+              {
+                "displayName": "Wacky",
+                "value": "wacky"
+              }
+            ]
+          }
+        },
+        "fontSize": {
+          "displayName": "Font Size",
+          "type": { "integer": true }
+        }
+      }
+    }
+  }
+}
