@@ -1,0 +1,33 @@
+{
+  "dataRoles": [
+    {
+      "displayName": "Values",
+      "name": "values",
+      "kind": "GroupingOrMeasure"
+    }
+  ],
+  "dataViewMappings": [
+    {
+      "conditions": [
+        {
+          "values": {
+            "min": 1,
+            "max": 5
+          }
+        }
+      ],
+      "table": { "rows": { "for": { "in": "values" } } }
+    }
+  ],
+  "objects": {
+    "columnFormatting": {
+      "displayName": "Bold Column Formatting",
+      "properties": {
+        "fontBold": {
+          "displayName": "Font Bold",
+          "type": { "bool": true }
+        }
+      }
+    }
+  }
+}

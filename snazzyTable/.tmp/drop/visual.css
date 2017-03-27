@@ -1,0 +1,22 @@
+.visual-PBI_CV_B9C6C6C7_9583_4BF9_B2E0_9CE157681851_DEBUG #snazzyTableContainer {
+  background-color: #EFEFEF;
+  overflow: auto;
+}
+.visual-PBI_CV_B9C6C6C7_9583_4BF9_B2E0_9CE157681851_DEBUG #snazzyTable {
+  border-collapse: collapse;
+}
+.visual-PBI_CV_B9C6C6C7_9583_4BF9_B2E0_9CE157681851_DEBUG #snazzyTable th,
+.visual-PBI_CV_B9C6C6C7_9583_4BF9_B2E0_9CE157681851_DEBUG #snazzyTable td {
+  padding: 4px;
+  padding-left: 8px;
+  padding-right: 8px;
+  border: 1px solid #888;
+}
+.visual-PBI_CV_B9C6C6C7_9583_4BF9_B2E0_9CE157681851_DEBUG #snazzyTable th {
+  background-color: black;
+  color: white;
+}
+.visual-PBI_CV_B9C6C6C7_9583_4BF9_B2E0_9CE157681851_DEBUG #snazzyTable td {
+  background-color: white;
+  color: #333;
+}
