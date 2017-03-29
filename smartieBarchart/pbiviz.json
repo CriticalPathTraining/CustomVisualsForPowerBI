@@ -1,0 +1,26 @@
+{
+  "visual": {
+    "name": "smartieBarchart",
+    "displayName": "Smartie Barchart",
+    "guid": "PBI_CV_7F014526_F58E_4837_B13F_7989F98B67DE",
+    "visualClassName": "SmartieBarchart",
+    "version": "1.0.0",
+    "description": "",
+    "supportUrl": "",
+    "gitHubUrl": ""
+  },
+  "apiVersion": "1.5.0",
+  "author": {
+    "name": "",
+    "email": ""
+  },
+  "assets": {
+    "icon": "assets/icon.png"
+  },
+  "externalJS": [
+    "node_modules/d3/d3.js"
+  ],
+  "style": "style/visual.less",
+  "capabilities": "capabilities.json",
+  "dependencies": "dependencies.json"
+}

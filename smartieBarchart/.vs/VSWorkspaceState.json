@@ -1,0 +1,10 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\node_modules\\@types",
+    "\\node_modules\\@types\\d3",
+    "\\src"
+  ],
+  "SelectedNode": "\\src\\tooltipServiceWrapper.ts",
+  "PreviewInSolutionExplorer": false
+}
