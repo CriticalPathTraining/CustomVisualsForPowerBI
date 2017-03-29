@@ -1,74 +1,76 @@
 module powerbi.extensibility.visual {
 
-  export interface CategoryItem {
+  export interface BarchartDataPoint {
     Category: string;
     Value: number;
   }
 
-  export class Visual implements IVisual {
+  export class SimpleBarchart implements IVisual {
 
     private svg: d3.Selection<SVGElement>;
     private svgGroupMain: d3.Selection<SVGElement>;
-
     private dataView: DataView;
-
-    // custom properties
     private enableAxis: boolean;
+
+    
+    private paddingSVG: number = 12;
+    private xAxisOffset: number = 50;
+    private yAxisOffset: number = 24;
 
     constructor(options: VisualConstructorOptions) {
       this.svg = d3.select(options.element).append('svg');
       this.svgGroupMain = this.svg.append('g');
-
       this.enableAxis = false;
     }
 
     public update(options: VisualUpdateOptions) {
 
-      // ensure that categorical dataview contains categories and measurable values 
-      var categorical = options.dataViews[0].categorical;
-      if (typeof categorical.categories === "undefined" || typeof categorical.values === "undefined") {
-        // remove all existing SVG elements 
+      // inspect dataview
+      this.dataView = options.dataViews[0];
+
+      // esnure categorical dataview exists
+      var categoricalDataView = options.dataViews[0].categorical;
+      if (typeof categoricalDataView === "undefined" ||
+          typeof categoricalDataView.categories === "undefined" ||
+          typeof categoricalDataView.values === "undefined") {
+        // handle case where categorical DataView is not valid
         this.svgGroupMain.selectAll("g").remove();
         return;
       }
 
-      this.dataView = options.dataViews[0];
-
-
-      // get height and width from viewport
+      // set height and width of root SVG element using viewport passed by Power BI host
       this.svg.attr({
         height: options.viewport.height,
         width: options.viewport.width
       });
 
-      var paddingSVG: number = 12;
-      var xAxisOffset = 50;
-      var yAxisOffset = 24
-
+      // create plot variable to assist with rendering barchart into plot area
       var plot = {
-        xOffset: paddingSVG + xAxisOffset,
-        yOffset: paddingSVG,
-        width: options.viewport.width - (paddingSVG * 2) - xAxisOffset,
-        height: options.viewport.height - (paddingSVG * 2) - yAxisOffset,
+        xOffset: this.paddingSVG + this.xAxisOffset,
+        yOffset: this.paddingSVG,
+        width: options.viewport.width - (this.paddingSVG * 2) - this.xAxisOffset,
+        height: options.viewport.height - (this.paddingSVG * 2) - this.yAxisOffset,
       };
 
-
+      // offset x and y coordinates for SVG group used to create bars 
       this.svgGroupMain.attr({
         height: plot.height,
         width: plot.width,
         transform: 'translate(' + plot.xOffset + ',' + plot.yOffset + ')'
       });
-      
-      // convert data format
-      var dataResult = Visual.converter(options.dataViews[0].categorical);
 
-      // setup d3 scale
+      // convert data from categorical DataView into dataset used with D3 data binding
+      var barchartData: BarchartDataPoint[] = this.dataviewConverter(categoricalDataView);
+
+      // setup D3 ordinal scale object to map input category names in dataset to output range of x coordinate
       var xScale = d3.scale.ordinal()
-        .domain(dataResult.map(function (d) { return d.Category; }))
+        .domain(barchartData.map(function (d) { return d.Category; }))
         .rangeRoundBands([0, plot.width], 0.1);
 
-      var yMax = d3.max(dataResult, function (d) { return d.Value * 1.05 });
+      // determine maximum value for the bars in the barchart
+      var yMax = d3.max(barchartData, function (d) { return +d.Value * 1.05 });
 
+      // setup D3 linear scale object to map input data values to output range of y coordinate
       var yScale = d3.scale.linear()
         .domain([0, yMax])
         .range([plot.height, 0]);
@@ -81,19 +83,22 @@ module powerbi.extensibility.visual {
       var xAxis = d3.svg.axis()
         .scale(xScale)
         .orient('bottom');
+
+      // draw x axis
       this.svgGroupMain
         .append('g')
         .attr('class', 'x axis')
         .style('fill', 'black')
         .attr('transform', 'translate(0,' + (plot.height) + ')')
         .call(xAxis);
-   
+
       // draw y axis
       var formatValue = d3.format(".2s");
       var yAxis = d3.svg.axis()
         .scale(yScale)
         .orient('left')
         .tickFormat(function (d) { return formatValue(d) });
+
       this.svgGroupMain
         .append('g')
         .attr('class', 'y axis')
@@ -104,12 +109,12 @@ module powerbi.extensibility.visual {
       var svgGroupBars = this.svgGroupMain
         .append('g')
         .selectAll('.bar')
-        .data(dataResult);
+        .data(barchartData);
 
       svgGroupBars.enter()
         .append('rect')
         .attr('class', 'bar')
-        .attr('fill', Visual.getFill(this.dataView).solid.color)
+        .attr('fill', this.getFill(this.dataView).solid.color)
         .attr('stroke', 'black')
         .attr('x', function (d) {
           return xScale(d.Category);
@@ -125,26 +130,26 @@ module powerbi.extensibility.visual {
       svgGroupBars
         .exit()
         .remove();
+
     }
 
-    private static getFill(dataView: DataView): Fill {
-    
-      if (dataView) {
-        var objects = dataView.metadata.objects;
-        if (objects) {
-          var object = objects['colorSelector'];
-          if (object) {
-            var fill = <Fill>object['fill'];
-            if (fill)
-              console.log(JSON.stringify(fill));
-              return fill;
-          }
-        }
+    public dataviewConverter(cat: DataViewCategorical): BarchartDataPoint[] {
+
+      var barchartData: BarchartDataPoint[] = [];
+
+      for (var i = 0; i < cat.categories[0].values.length; i++) {
+        barchartData.push({ Category: cat.categories[0].values[i].toString(), Value: +cat.values[0].values[i] });
       }
-      return { solid: { color: "teal" } };
+
+      // sort dataset by specific column if that is required
+      // barchartData.sort( (x, y) => { return y.Value - x.Value; })
+
+      return barchartData;
+
     }
 
     public enumerateObjectInstances(options: EnumerateVisualObjectInstancesOptions): VisualObjectInstanceEnumeration {
+
       let objectName = options.objectName;
       let objectEnumeration: VisualObjectInstance[] = [];
 
@@ -153,7 +158,7 @@ module powerbi.extensibility.visual {
           objectEnumeration.push({
             objectName: objectName,
             properties: {
-              fill: Visual.getFill(this.dataView)
+              fill: this.getFill(this.dataView)
             },
             selector: null
           });
@@ -163,16 +168,22 @@ module powerbi.extensibility.visual {
       return objectEnumeration;
     }
 
-    public static converter(cat: DataViewCategorical): CategoryItem[] {
-      var resultData: CategoryItem[] = [];
-      for (var i = 0; i < cat.categories[0].values.length; i++) {
-        resultData.push({ Category: cat.categories[0].values[i], Value: cat.values[0].values[i] });
+    private getFill(dataView: DataView): Fill {
+
+      if (dataView) {
+        var objects = dataView.metadata.objects;
+        if (objects) {
+          var object = objects['colorSelector'];
+          if (object) {
+            var fill = <Fill>object['fill'];
+            if (fill)
+              console.log(JSON.stringify(fill));
+            return fill;
+          }
+        }
       }
-      resultData.sort((x, y) => { return y.Value - x.Value; })
-      return resultData;
+      return { solid: { color: "teal" } };
     }
-
-    public destroy(): void { }
-
-  }
+ 
+   }
 }

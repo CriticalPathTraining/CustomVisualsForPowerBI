@@ -1,15 +1,15 @@
 {
   "visual": {
-    "name": "simpleBarChart",
-    "displayName": "Simple Bar Chart",
-    "guid": "PBI_CV_8DD8014C_2A2B_4017_9C8E_8FD194F9DF96",
-    "visualClassName": "Visual",
+    "name": "simpleBarchart",
+    "displayName": "SimpleBarchart",
+    "guid": "PBI_CV_0B9C9FBA_15A2_4A94_8AE4_8F778869B190",
+    "visualClassName": "SimpleBarchart",
     "version": "1.0.0",
     "description": "",
     "supportUrl": "",
     "gitHubUrl": ""
   },
-  "apiVersion": "1.1.0",
+  "apiVersion": "1.5.0",
   "author": {
     "name": "",
     "email": ""
@@ -17,7 +17,10 @@
   "assets": {
     "icon": "assets/icon.png"
   },
-  "externalJS": [],
+  "externalJS": [
+    "node_modules/d3/d3.js"
+  ],
   "style": "style/visual.less",
-  "capabilities": "capabilities.json"
+  "capabilities": "capabilities.json",
+  "dependencies": "dependencies.json"
 }

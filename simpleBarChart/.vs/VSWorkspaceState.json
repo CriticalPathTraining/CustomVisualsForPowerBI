@@ -1,8 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\src"
+    "\\node_modules\\@types",
+    "\\node_modules\\@types\\d3",
+    "\\node_modules\\d3",
+    "\\src",
+    "\\style"
   ],
-  "SelectedNode": "\\capabilities.json",
+  "SelectedNode": "\\src\\visual.ts",
   "PreviewInSolutionExplorer": false
 }

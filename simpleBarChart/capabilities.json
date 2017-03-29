@@ -1,36 +1,37 @@
 {
   "dataRoles": [
     {
-      "displayName": "Category Data",
-      "name": "category",
-      "kind": 0
+      "displayName": "Grouping for Bars",
+      "name": "myCategory",
+      "kind": "Grouping"
     },
     {
-      "displayName": "Measure Data",
-      "name": "measure",
-      "kind": 1
+      "displayName": "Bar Measurement",
+      "name": "myMeasure",
+      "kind": "Measure"
     }
   ],
   "dataViewMappings": [ {
-      "conditions": [ {          
-          "category": { "max": 1 },
-          "measure":  { "max": 1 }
-        }
-      ],
+    "conditions": [
+      {
+        "myCategory": { "max": 1 },
+        "myMeasure": { "max": 1 }
+      }
+    ],
       "categorical": {
-        "categories": {          
-          "for": { "in": "category" },
+        "categories": {
+          "for": { "in": "myCategory" },
           "dataReductionAlgorithm": { "top": { } }
         },
         "values": {
-          "select": [ { "bind": { "to": "measure" } } ]
+          "select": [ { "bind": { "to": "myMeasure" } } ]
         }
       }
     }
   ],
   "objects": {
     "colorSelector": {
-      "displayName": "Bar Chart Colors",
+      "displayName": "Bar Color",
       "properties": {
         "fill": {
           "displayName": "Color",
