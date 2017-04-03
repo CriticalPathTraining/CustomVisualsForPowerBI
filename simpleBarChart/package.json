@@ -2,6 +2,9 @@
   "name": "visual",
   "dependencies": {
     "@types/d3": "^3.5.38",
-    "d3": "^3.5.17"
+    "@types/jquery": "^2.0.41",
+    "d3": "^3.5.17",
+    "jquery": "^3.2.1",
+    "powerbi-visuals-utils-formattingutils": "^0.4.0"
   }
 }

@@ -1,7 +1,7 @@
 {
   "dataRoles": [
     {
-      "displayName": "Grouping for Bars",
+      "displayName": "Bar Grouping",
       "name": "myCategory",
       "kind": "Grouping"
     },
@@ -31,12 +31,20 @@
     }
   ],
   "objects": {
-    "colorSelector": {
-      "displayName": "Bar Color",
+    "barchartProperties": {
+      "displayName": "Bar Chart Properties",
       "properties": {
-        "fill": {
-          "displayName": "Color",
+        "sortBySize": {
+          "displayName": "Sort by Size",
+          "type": { "bool": true }
+        },
+        "barColor": {
+          "displayName": "Bar Color",
           "type": { "fill": { "solid": { "color": true } } }
+        },
+        "fontSize": {
+          "displayName": "Font Size",
+          "type": { "integer": true }
         }
       }
     }

@@ -1,10 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\node_modules\\@types",
-    "\\node_modules\\@types\\d3",
+    "\\assets",
+    "\\node_modules\\powerbi-visuals-utils-tooltiputils",
     "\\src"
   ],
-  "SelectedNode": "\\src\\tooltipServiceWrapper.ts",
+  "SelectedNode": "\\assets\\icon.png",
   "PreviewInSolutionExplorer": false
 }
